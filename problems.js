@@ -1381,5 +1381,1403 @@ print(is_number_palindrome(121))`
         return False
     return str(n) == str(n)[::-1]`
         }
+    },
+    {
+        id: 31,
+        title: "Selection Sort",
+        difficulty: "medium",
+        category: "Sort",
+        description: "Sắp xếp mảng bằng thuật toán Selection Sort (sắp xếp chọn).",
+        hint: "Tìm phần tử nhỏ nhất trong phần chưa sắp xếp, đổi chỗ với phần tử đầu tiên của phần chưa sắp xếp.",
+        examples: [
+            { input: "nums = [64, 25, 12, 22, 11]", output: "[11, 12, 22, 25, 64]" }
+        ],
+        starterCode: {
+            javascript: `function selectionSort(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(selectionSort([64, 25, 12, 22, 11]));`,
+            python: `def selection_sort(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(selection_sort([64, 25, 12, 22, 11]))`
+        },
+        testCases: [
+            { input: [[64, 25, 12, 22, 11]], expected: [11, 12, 22, 25, 64] },
+            { input: [[5, 2, 9, 1, 7]], expected: [1, 2, 5, 7, 9] },
+            { input: [[1]], expected: [1] }
+        ],
+        solution: {
+            javascript: `function selectionSort(nums) {
+    const arr = [...nums];
+    for (let i = 0; i < arr.length - 1; i++) {
+        let minIdx = i;
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[minIdx]) minIdx = j;
+        }
+        [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+    }
+    return arr;
+}`,
+            python: `def selection_sort(nums):
+    arr = nums.copy()
+    for i in range(len(arr) - 1):
+        min_idx = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr`
+        }
+    },
+    {
+        id: 32,
+        title: "Insertion Sort",
+        difficulty: "medium",
+        category: "Sort",
+        description: "Sắp xếp mảng bằng thuật toán Insertion Sort (sắp xếp chèn).",
+        hint: "Duyệt từ trái sang phải, chèn từng phần tử vào vị trí đúng trong phần đã sắp xếp bên trái.",
+        examples: [
+            { input: "nums = [12, 11, 13, 5, 6]", output: "[5, 6, 11, 12, 13]" }
+        ],
+        starterCode: {
+            javascript: `function insertionSort(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(insertionSort([12, 11, 13, 5, 6]));`,
+            python: `def insertion_sort(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(insertion_sort([12, 11, 13, 5, 6]))`
+        },
+        testCases: [
+            { input: [[12, 11, 13, 5, 6]], expected: [5, 6, 11, 12, 13] },
+            { input: [[5, 2, 4, 6, 1, 3]], expected: [1, 2, 3, 4, 5, 6] },
+            { input: [[1]], expected: [1] }
+        ],
+        solution: {
+            javascript: `function insertionSort(nums) {
+    const arr = [...nums];
+    for (let i = 1; i < arr.length; i++) {
+        let key = arr[i];
+        let j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+    return arr;
+}`,
+            python: `def insertion_sort(nums):
+    arr = nums.copy()
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr`
+        }
+    },
+    {
+        id: 33,
+        title: "String Rotation Check",
+        difficulty: "medium",
+        category: "String",
+        description: "Kiểm tra chuỗi s2 có phải là phép xoay của chuỗi s1 không (VD: 'waterbottle' xoay thành 'erbottlewat').",
+        hint: "Nối s1 với chính nó (s1+s1), sau đó kiểm tra s2 có phải là chuỗi con của kết quả không.",
+        examples: [
+            { input: 's1 = "waterbottle", s2 = "erbottlewat"', output: "true" },
+            { input: 's1 = "hello", s2 = "llohe"', output: "true" }
+        ],
+        starterCode: {
+            javascript: `function isRotation(s1, s2) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(isRotation("waterbottle", "erbottlewat"));`,
+            python: `def is_rotation(s1, s2):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(is_rotation("waterbottle", "erbottlewat"))`
+        },
+        testCases: [
+            { input: ["waterbottle", "erbottlewat"], expected: true },
+            { input: ["hello", "llohe"], expected: true },
+            { input: ["hello", "world"], expected: false }
+        ],
+        solution: {
+            javascript: `function isRotation(s1, s2) {
+    if (s1.length !== s2.length) return false;
+    return (s1 + s1).includes(s2);
+}`,
+            python: `def is_rotation(s1, s2):
+    if len(s1) != len(s2):
+        return False
+    return s2 in (s1 + s1)`
+        }
+    },
+    {
+        id: 34,
+        title: "Majority Element",
+        difficulty: "medium",
+        category: "Array",
+        description: "Tìm phần tử xuất hiện nhiều hơn n/2 lần trong mảng (majority element).",
+        hint: "Dùng bảng băm đếm tần suất, hoặc dùng thuật toán Boyer-Moore Voting.",
+        examples: [
+            { input: "nums = [3, 2, 3]", output: "3" },
+            { input: "nums = [2, 2, 1, 1, 1, 2, 2]", output: "2" }
+        ],
+        starterCode: {
+            javascript: `function majorityElement(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(majorityElement([3, 2, 3]));`,
+            python: `def majority_element(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(majority_element([3, 2, 3]))`
+        },
+        testCases: [
+            { input: [[3, 2, 3]], expected: 3 },
+            { input: [[2, 2, 1, 1, 1, 2, 2]], expected: 2 },
+            { input: [[1]], expected: 1 }
+        ],
+        solution: {
+            javascript: `function majorityElement(nums) {
+    let candidate = nums[0], count = 1;
+    for (let i = 1; i < nums.length; i++) {
+        if (count === 0) {
+            candidate = nums[i];
+            count = 1;
+        } else if (nums[i] === candidate) {
+            count++;
+        } else {
+            count--;
+        }
+    }
+    return candidate;
+}`,
+            python: `def majority_element(nums):
+    candidate, count = nums[0], 1
+    for num in nums[1:]:
+        if count == 0:
+            candidate, count = num, 1
+        elif num == candidate:
+            count += 1
+        else:
+            count -= 1
+    return candidate`
+        }
+    },
+    {
+        id: 35,
+        title: "First Repeated Character",
+        difficulty: "easy",
+        category: "String",
+        description: "Tìm ký tự đầu tiên bị lặp lại trong chuỗi. Trả về null/None nếu không có.",
+        hint: "Dùng Set để lưu các ký tự đã gặp. Trả về ngay khi gặp ký tự đã có trong Set.",
+        examples: [
+            { input: 's = "abcabc"', output: '"a"' },
+            { input: 's = "abc"', output: "null" }
+        ],
+        starterCode: {
+            javascript: `function firstRepeated(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(firstRepeated("abcabc"));`,
+            python: `def first_repeated(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(first_repeated("abcabc"))`
+        },
+        testCases: [
+            { input: ["abcabc"], expected: "a" },
+            { input: ["abcdef"], expected: null },
+            { input: ["aabbcc"], expected: "a" }
+        ],
+        solution: {
+            javascript: `function firstRepeated(s) {
+    const seen = new Set();
+    for (const char of s) {
+        if (seen.has(char)) return char;
+        seen.add(char);
+    }
+    return null;
+}`,
+            python: `def first_repeated(s):
+    seen = set()
+    for char in s:
+        if char in seen:
+            return char
+        seen.add(char)
+    return None`
+        }
+    },
+    {
+        id: 36,
+        title: "Sort Array of 0s, 1s, 2s",
+        difficulty: "medium",
+        category: "Array",
+        description: "Sắp xếp mảng chỉ gồm các số 0, 1, 2 (Dutch National Flag Problem).",
+        hint: "Dùng ba con trỏ: low, mid, high. Đổi chỗ để đưa 0 về đầu, 2 về cuối.",
+        examples: [
+            { input: "nums = [2, 0, 2, 1, 1, 0]", output: "[0, 0, 1, 1, 2, 2]" }
+        ],
+        starterCode: {
+            javascript: `function sortColors(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(sortColors([2, 0, 2, 1, 1, 0]));`,
+            python: `def sort_colors(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(sort_colors([2, 0, 2, 1, 1, 0]))`
+        },
+        testCases: [
+            { input: [[2, 0, 2, 1, 1, 0]], expected: [0, 0, 1, 1, 2, 2] },
+            { input: [[2, 0, 1]], expected: [0, 1, 2] },
+            { input: [[0]], expected: [0] }
+        ],
+        solution: {
+            javascript: `function sortColors(nums) {
+    const arr = [...nums];
+    let low = 0, mid = 0, high = arr.length - 1;
+    while (mid <= high) {
+        if (arr[mid] === 0) {
+            [arr[low], arr[mid]] = [arr[mid], arr[low]];
+            low++; mid++;
+        } else if (arr[mid] === 1) {
+            mid++;
+        } else {
+            [arr[mid], arr[high]] = [arr[high], arr[mid]];
+            high--;
+        }
+    }
+    return arr;
+}`,
+            python: `def sort_colors(nums):
+    arr = nums.copy()
+    low, mid, high = 0, 0, len(arr) - 1
+    while mid <= high:
+        if arr[mid] == 0:
+            arr[low], arr[mid] = arr[mid], arr[low]
+            low += 1
+            mid += 1
+        elif arr[mid] == 1:
+            mid += 1
+        else:
+            arr[mid], arr[high] = arr[high], arr[mid]
+            high -= 1
+    return arr`
+        }
+    },
+    {
+        id: 37,
+        title: "Intersection of Two Arrays",
+        difficulty: "easy",
+        category: "Array",
+        description: "Tìm giao của hai mảng (các phần tử xuất hiện ở cả hai mảng).",
+        hint: "Dùng Set để lưu phần tử mảng thứ nhất, sau đó lọc mảng thứ hai.",
+        examples: [
+            { input: "nums1 = [1,2,2,1], nums2 = [2,2]", output: "[2]" }
+        ],
+        starterCode: {
+            javascript: `function intersection(nums1, nums2) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(intersection([1,2,2,1], [2,2]));`,
+            python: `def intersection(nums1, nums2):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(intersection([1,2,2,1], [2,2]))`
+        },
+        testCases: [
+            { input: [[1,2,2,1], [2,2]], expected: [2] },
+            { input: [[4,9,5], [9,4,9,8,4]], expected: [4, 9] },
+            { input: [[1,2,3], [4,5,6]], expected: [] }
+        ],
+        solution: {
+            javascript: `function intersection(nums1, nums2) {
+    const set1 = new Set(nums1);
+    const result = new Set();
+    for (const num of nums2) {
+        if (set1.has(num)) result.add(num);
+    }
+    return [...result];
+}`,
+            python: `def intersection(nums1, nums2):
+    return list(set(nums1) & set(nums2))`
+        }
+    },
+    {
+        id: 38,
+        title: "Union of Two Arrays",
+        difficulty: "easy",
+        category: "Array",
+        description: "Tìm hợp của hai mảng (tất cả phần tử không trùng lặp từ cả hai mảng).",
+        hint: "Dùng Set để lưu tất cả phần tử từ cả hai mảng.",
+        examples: [
+            { input: "nums1 = [1,2,3], nums2 = [2,3,4]", output: "[1,2,3,4]" }
+        ],
+        starterCode: {
+            javascript: `function union(nums1, nums2) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(union([1,2,3], [2,3,4]));`,
+            python: `def union(nums1, nums2):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(union([1,2,3], [2,3,4]))`
+        },
+        testCases: [
+            { input: [[1,2,3], [2,3,4]], expected: [1,2,3,4] },
+            { input: [[1,1,1], [2,2,2]], expected: [1,2] },
+            { input: [[], [1,2]], expected: [1,2] }
+        ],
+        solution: {
+            javascript: `function union(nums1, nums2) {
+    return [...new Set([...nums1, ...nums2])];
+}`,
+            python: `def union(nums1, nums2):
+    return list(set(nums1) | set(nums2))`
+        }
+    },
+    {
+        id: 39,
+        title: "Kth Largest Element",
+        difficulty: "medium",
+        category: "Array",
+        description: "Tìm phần tử lớn thứ k trong mảng (k = 1 là lớn nhất).",
+        hint: "Sắp xếp mảng giảm dần rồi lấy phần tử thứ k-1. Hoặc dùng heap.",
+        examples: [
+            { input: "nums = [3,2,1,5,6,4], k = 2", output: "5" }
+        ],
+        starterCode: {
+            javascript: `function kthLargest(nums, k) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(kthLargest([3,2,1,5,6,4], 2));`,
+            python: `def kth_largest(nums, k):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(kth_largest([3,2,1,5,6,4], 2))`
+        },
+        testCases: [
+            { input: [[3,2,1,5,6,4], 2], expected: 5 },
+            { input: [[3,2,3,1,2,4,5,5,6], 4], expected: 4 },
+            { input: [[1], 1], expected: 1 }
+        ],
+        solution: {
+            javascript: `function kthLargest(nums, k) {
+    return nums.sort((a, b) => b - a)[k - 1];
+}`,
+            python: `def kth_largest(nums, k):
+    return sorted(nums, reverse=True)[k - 1]`
+        }
+    },
+    {
+        id: 40,
+        title: "Kth Smallest Element",
+        difficulty: "medium",
+        category: "Array",
+        description: "Tìm phần tử nhỏ thứ k trong mảng (k = 1 là nhỏ nhất).",
+        hint: "Sắp xếp mảng tăng dần rồi lấy phần tử thứ k-1.",
+        examples: [
+            { input: "nums = [7,10,4,3,20,15], k = 3", output: "7" }
+        ],
+        starterCode: {
+            javascript: `function kthSmallest(nums, k) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(kthSmallest([7,10,4,3,20,15], 3));`,
+            python: `def kth_smallest(nums, k):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(kth_smallest([7,10,4,3,20,15], 3))`
+        },
+        testCases: [
+            { input: [[7,10,4,3,20,15], 3], expected: 7 },
+            { input: [[7,10,4,3,20,15], 1], expected: 3 },
+            { input: [[1], 1], expected: 1 }
+        ],
+        solution: {
+            javascript: `function kthSmallest(nums, k) {
+    return nums.sort((a, b) => a - b)[k - 1];
+}`,
+            python: `def kth_smallest(nums, k):
+    return sorted(nums)[k - 1]`
+        }
+    },
+    {
+        id: 41,
+        title: "Check Digits Only",
+        difficulty: "easy",
+        category: "String",
+        description: "Kiểm tra chuỗi chỉ chứa các ký tự số (0-9).",
+        hint: "Duyệt từng ký tự kiểm tra có nằm trong '0'-'9' không. Hoặc dùng regex.",
+        examples: [
+            { input: 's = "12345"', output: "true" },
+            { input: 's = "123a5"', output: "false" }
+        ],
+        starterCode: {
+            javascript: `function isDigitsOnly(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(isDigitsOnly("12345"));`,
+            python: `def is_digits_only(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(is_digits_only("12345"))`
+        },
+        testCases: [
+            { input: ["12345"], expected: true },
+            { input: ["123a5"], expected: false },
+            { input: [""], expected: false }
+        ],
+        solution: {
+            javascript: `function isDigitsOnly(s) {
+    if (s.length === 0) return false;
+    return /^\\d+$/.test(s);
+}`,
+            python: `def is_digits_only(s):
+    return s.isdigit() if s else False`
+        }
+    },
+    {
+        id: 42,
+        title: "Length of Last Word",
+        difficulty: "easy",
+        category: "String",
+        description: "Tìm độ dài của từ cuối cùng trong chuỗi.",
+        hint: "Cắt khoảng trắng thừa, tách theo khoảng trắng, lấy độ dài từ cuối.",
+        examples: [
+            { input: 's = "Hello World"', output: "5" },
+            { input: 's = "   fly me   to   the moon  "', output: "4" }
+        ],
+        starterCode: {
+            javascript: `function lengthOfLastWord(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(lengthOfLastWord("Hello World"));`,
+            python: `def length_of_last_word(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(length_of_last_word("Hello World"))`
+        },
+        testCases: [
+            { input: ["Hello World"], expected: 5 },
+            { input: ["   fly me   to   the moon  "], expected: 4 },
+            { input: ["a"], expected: 1 }
+        ],
+        solution: {
+            javascript: `function lengthOfLastWord(s) {
+    const words = s.trim().split(' ');
+    return words[words.length - 1].length;
+}`,
+            python: `def length_of_last_word(s):
+    return len(s.strip().split()[-1])`
+        }
+    },
+    {
+        id: 43,
+        title: "Generate All Substrings",
+        difficulty: "medium",
+        category: "String",
+        description: "Sinh tất cả các chuỗi con của một chuỗi. Trả về mảng các chuỗi con.",
+        hint: "Dùng hai vòng lặp: vòng ngoài chọn điểm bắt đầu, vòng trong chọn điểm kết thúc.",
+        examples: [
+            { input: 's = "abc"', output: '["a", "ab", "abc", "b", "bc", "c"]' }
+        ],
+        starterCode: {
+            javascript: `function allSubstrings(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(allSubstrings("abc"));`,
+            python: `def all_substrings(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(all_substrings("abc"))`
+        },
+        testCases: [
+            { input: ["abc"], expected: ["a", "ab", "abc", "b", "bc", "c"] },
+            { input: ["ab"], expected: ["a", "ab", "b"] },
+            { input: ["a"], expected: ["a"] }
+        ],
+        solution: {
+            javascript: `function allSubstrings(s) {
+    const result = [];
+    for (let i = 0; i < s.length; i++) {
+        for (let j = i + 1; j <= s.length; j++) {
+            result.push(s.slice(i, j));
+        }
+    }
+    return result;
+}`,
+            python: `def all_substrings(s):
+    result = []
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            result.append(s[i:j])
+    return result`
+        }
+    },
+    {
+        id: 44,
+        title: "Sum of Array Elements",
+        difficulty: "easy",
+        category: "Array",
+        description: "Tính tổng tất cả các phần tử trong mảng.",
+        hint: "Dùng vòng lặp cộng dồn, hoặc dùng reduce trong JS, sum trong Python.",
+        examples: [
+            { input: "nums = [1, 2, 3, 4, 5]", output: "15" }
+        ],
+        starterCode: {
+            javascript: `function sumArray(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(sumArray([1, 2, 3, 4, 5]));`,
+            python: `def sum_array(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(sum_array([1, 2, 3, 4, 5]))`
+        },
+        testCases: [
+            { input: [[1, 2, 3, 4, 5]], expected: 15 },
+            { input: [[10, -5, 3]], expected: 8 },
+            { input: [[0]], expected: 0 }
+        ],
+        solution: {
+            javascript: `function sumArray(nums) {
+    return nums.reduce((sum, num) => sum + num, 0);
+}`,
+            python: `def sum_array(nums):
+    return sum(nums)`
+        }
+    },
+    {
+        id: 45,
+        title: "Product of Array Elements",
+        difficulty: "easy",
+        category: "Array",
+        description: "Tính tích của tất cả các phần tử trong mảng.",
+        hint: "Dùng vòng lặp nhân dồn, hoặc dùng reduce trong JS.",
+        examples: [
+            { input: "nums = [1, 2, 3, 4]", output: "24" }
+        ],
+        starterCode: {
+            javascript: `function productArray(nums) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(productArray([1, 2, 3, 4]));`,
+            python: `def product_array(nums):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(product_array([1, 2, 3, 4]))`
+        },
+        testCases: [
+            { input: [[1, 2, 3, 4]], expected: 24 },
+            { input: [[2, 5, 3]], expected: 30 },
+            { input: [[1, 0, 3]], expected: 0 }
+        ],
+        solution: {
+            javascript: `function productArray(nums) {
+    return nums.reduce((prod, num) => prod * num, 1);
+}`,
+            python: `def product_array(nums):
+    result = 1
+    for num in nums:
+        result *= num
+    return result`
+        }
+    },
+    {
+        id: 46,
+        title: "Count Vowels and Consonants",
+        difficulty: "easy",
+        category: "String",
+        description: "Đếm số nguyên âm và phụ âm trong chuỗi. Trả về object với vowels và consonants.",
+        hint: "Duyệt chuỗi, kiểm tra mỗi ký tự có phải nguyên âm (a,e,i,o,u) hay phụ âm.",
+        examples: [
+            { input: 's = "hello"', output: '{vowels: 2, consonants: 3}' }
+        ],
+        starterCode: {
+            javascript: `function countVowelsConsonants(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(countVowelsConsonants("hello"));`,
+            python: `def count_vowels_consonants(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(count_vowels_consonants("hello"))`
+        },
+        testCases: [
+            { input: ["hello"], expected: {vowels: 2, consonants: 3} },
+            { input: ["aeiou"], expected: {vowels: 5, consonants: 0} },
+            { input: ["xyz"], expected: {vowels: 0, consonants: 3} }
+        ],
+        solution: {
+            javascript: `function countVowelsConsonants(s) {
+    const vowels = 'aeiouAEIOU';
+    let v = 0, c = 0;
+    for (const char of s.toLowerCase()) {
+        if (char >= 'a' && char <= 'z') {
+            vowels.includes(char) ? v++ : c++;
+        }
+    }
+    return {vowels: v, consonants: c};
+}`,
+            python: `def count_vowels_consonants(s):
+    vowels = 'aeiouAEIOU'
+    v = c = 0
+    for char in s.lower():
+        if char.isalpha():
+            if char in vowels:
+                v += 1
+            else:
+                c += 1
+    return {"vowels": v, "consonants": c}`
+        }
+    },
+    {
+        id: 47,
+        title: "GCD of Two Numbers",
+        difficulty: "easy",
+        category: "Math",
+        description: "Tìm ước chung lớn nhất (GCD) của hai số nguyên dương.",
+        hint: "Dùng thuật toán Euclid: GCD(a,b) = GCD(b, a%b) cho đến khi b = 0.",
+        examples: [
+            { input: "a = 12, b = 8", output: "4" },
+            { input: "a = 17, b = 5", output: "1" }
+        ],
+        starterCode: {
+            javascript: `function gcd(a, b) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(gcd(12, 8));`,
+            python: `def gcd(a, b):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(gcd(12, 8))`
+        },
+        testCases: [
+            { input: [12, 8], expected: 4 },
+            { input: [17, 5], expected: 1 },
+            { input: [100, 25], expected: 25 }
+        ],
+        solution: {
+            javascript: `function gcd(a, b) {
+    while (b !== 0) {
+        [a, b] = [b, a % b];
+    }
+    return a;
+}`,
+            python: `def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a`
+        }
+    },
+    {
+        id: 48,
+        title: "LCM of Two Numbers",
+        difficulty: "easy",
+        category: "Math",
+        description: "Tìm bội chung nhỏ nhất (LCM) của hai số nguyên dương.",
+        hint: "LCM(a,b) = (a * b) / GCD(a,b). Tính GCD trước rồi áp dụng công thức.",
+        examples: [
+            { input: "a = 4, b = 6", output: "12" }
+        ],
+        starterCode: {
+            javascript: `function lcm(a, b) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(lcm(4, 6));`,
+            python: `def lcm(a, b):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(lcm(4, 6))`
+        },
+        testCases: [
+            { input: [4, 6], expected: 12 },
+            { input: [3, 5], expected: 15 },
+            { input: [12, 18], expected: 36 }
+        ],
+        solution: {
+            javascript: `function lcm(a, b) {
+    function gcd(x, y) {
+        while (y !== 0) [x, y] = [y, x % y];
+        return x;
+    }
+    return (a * b) / gcd(a, b);
+}`,
+            python: `def lcm(a, b):
+    def gcd(x, y):
+        while y:
+            x, y = y, x % y
+        return x
+    return (a * b) // gcd(a, b)`
+        }
+    },
+    {
+        id: 49,
+        title: "Power of Two",
+        difficulty: "easy",
+        category: "Math",
+        description: "Kiểm tra một số có phải lũy thừa của 2 không (1, 2, 4, 8, 16, ...).",
+        hint: "Số là lũy thừa của 2 nếu n > 0 và n & (n-1) === 0. Hoặc chia liên tục cho 2.",
+        examples: [
+            { input: "n = 16", output: "true" },
+            { input: "n = 18", output: "false" }
+        ],
+        starterCode: {
+            javascript: `function isPowerOfTwo(n) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(isPowerOfTwo(16));`,
+            python: `def is_power_of_two(n):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(is_power_of_two(16))`
+        },
+        testCases: [
+            { input: [16], expected: true },
+            { input: [18], expected: false },
+            { input: [1], expected: true },
+            { input: [0], expected: false }
+        ],
+        solution: {
+            javascript: `function isPowerOfTwo(n) {
+    return n > 0 && (n & (n - 1)) === 0;
+}`,
+            python: `def is_power_of_two(n):
+    return n > 0 and (n & (n - 1)) == 0`
+        }
+    },
+    {
+        id: 50,
+        title: "Longest Palindromic Substring",
+        difficulty: "hard",
+        category: "String",
+        description: "Tìm chuỗi con dài nhất là palindrome trong chuỗi cho trước.",
+        hint: "Với mỗi vị trí, mở rộng ra hai bên để tìm palindrome dài nhất (xét cả palindrome lẻ và chẵn).",
+        examples: [
+            { input: 's = "babad"', output: '"bab"', explanation: '"aba" cũng là đáp án đúng' },
+            { input: 's = "cbbd"', output: '"bb"' }
+        ],
+        starterCode: {
+            javascript: `function longestPalindrome(s) {
+    // Viết code của bạn ở đây
+
+}
+
+// Test
+console.log(longestPalindrome("babad"));`,
+            python: `def longest_palindrome(s):
+    # Viết code của bạn ở đây
+    pass
+
+# Test
+print(longest_palindrome("babad"))`
+        },
+        testCases: [
+            { input: ["babad"], expected: "bab" },
+            { input: ["cbbd"], expected: "bb" },
+            { input: ["a"], expected: "a" }
+        ],
+        solution: {
+            javascript: `function longestPalindrome(s) {
+    let result = '';
+    for (let i = 0; i < s.length; i++) {
+        // Odd length
+        let l = i, r = i;
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            if (r - l + 1 > result.length) result = s.slice(l, r + 1);
+            l--; r++;
+        }
+        // Even length
+        l = i; r = i + 1;
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            if (r - l + 1 > result.length) result = s.slice(l, r + 1);
+            l--; r++;
+        }
+    }
+    return result;
+}`,
+            python: `def longest_palindrome(s):
+    result = ''
+    for i in range(len(s)):
+        # Odd length
+        l, r = i, i
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > len(result):
+                result = s[l:r+1]
+            l -= 1
+            r += 1
+        # Even length
+        l, r = i, i + 1
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > len(result):
+                result = s[l:r+1]
+            l -= 1
+            r += 1
+    return result`
+        }
+    },
+    {
+        id: 51,
+        title: "Extract Barcode from String",
+        difficulty: "medium",
+        category: "String/Regex",
+        description: "Trích xuất mã vạch (barcode) từ chuỗi lộn xộn. Mã vạch là chuỗi số có độ dài từ 8-14 ký tự liên tiếp.",
+        hint: "Dùng regex để tìm chuỗi số liên tiếp có độ dài 8-14. Pattern: /\\d{8,14}/g",
+        examples: [
+            { input: 's = "abc123456789012xyz"', output: '["123456789012"]' },
+            { input: 's = "test12345678data87654321end"', output: '["12345678", "87654321"]' }
+        ],
+        starterCode: {
+            javascript: `function extractBarcodes(s) {
+    // Viết code của bạn ở đây
+    // Tìm tất cả chuỗi số có 8-14 chữ số
+
+}
+
+// Test
+console.log(extractBarcodes("abc123456789012xyz"));`,
+            python: `def extract_barcodes(s):
+    # Viết code của bạn ở đây
+    # Tìm tất cả chuỗi số có 8-14 chữ số
+    pass
+
+# Test
+print(extract_barcodes("abc123456789012xyz"))`
+        },
+        testCases: [
+            { input: ["abc123456789012xyz"], expected: ["123456789012"] },
+            { input: ["test12345678data87654321end"], expected: ["12345678", "87654321"] },
+            { input: ["nobarcode"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractBarcodes(s) {
+    const matches = s.match(/\\d{8,14}/g);
+    return matches || [];
+}`,
+            python: `def extract_barcodes(s):
+    import re
+    return re.findall(r'\\d{8,14}', s)`
+        }
+    },
+    {
+        id: 52,
+        title: "Extract EAN-13 Barcode",
+        difficulty: "medium",
+        category: "String/Regex",
+        description: "Trích xuất mã vạch EAN-13 (đúng 13 chữ số) từ chuỗi lộn xộn.",
+        hint: "EAN-13 có đúng 13 chữ số. Dùng regex: /\\b\\d{13}\\b/g hoặc tìm chuỗi 13 số không nằm trong chuỗi số dài hơn.",
+        examples: [
+            { input: 's = "Product: 4006381333931 - Price: $10"', output: '["4006381333931"]' },
+            { input: 's = "ID:1234567890123,Code:9876543210987"', output: '["1234567890123", "9876543210987"]' }
+        ],
+        starterCode: {
+            javascript: `function extractEAN13(s) {
+    // Viết code của bạn ở đây
+    // Tìm mã EAN-13 (đúng 13 chữ số)
+
+}
+
+// Test
+console.log(extractEAN13("Product: 4006381333931 - Price: $10"));`,
+            python: `def extract_ean13(s):
+    # Viết code của bạn ở đây
+    # Tìm mã EAN-13 (đúng 13 chữ số)
+    pass
+
+# Test
+print(extract_ean13("Product: 4006381333931 - Price: $10"))`
+        },
+        testCases: [
+            { input: ["Product: 4006381333931 - Price: $10"], expected: ["4006381333931"] },
+            { input: ["ID:1234567890123,Code:9876543210987"], expected: ["1234567890123", "9876543210987"] },
+            { input: ["short12345"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractEAN13(s) {
+    const matches = s.match(/(?<!\\d)\\d{13}(?!\\d)/g);
+    return matches || [];
+}`,
+            python: `def extract_ean13(s):
+    import re
+    return re.findall(r'(?<!\\d)\\d{13}(?!\\d)', s)`
+        }
+    },
+    {
+        id: 53,
+        title: "Extract Code128 Pattern",
+        difficulty: "medium",
+        category: "String/Regex",
+        description: "Trích xuất mã Code128 từ chuỗi. Code128 thường bắt đầu bằng ký tự đặc biệt và chứa chữ + số. Tìm pattern dạng [A-Z0-9-]{6,20}.",
+        hint: "Dùng regex để tìm chuỗi gồm chữ in hoa, số và dấu gạch ngang, độ dài 6-20.",
+        examples: [
+            { input: 's = "scan:ABC-123456 done"', output: '["ABC-123456"]' },
+            { input: 's = "data PROD-001 and ITEM-999-XL here"', output: '["PROD-001", "ITEM-999-XL"]' }
+        ],
+        starterCode: {
+            javascript: `function extractCode128(s) {
+    // Viết code của bạn ở đây
+    // Tìm pattern [A-Z0-9-] độ dài 6-20
+
+}
+
+// Test
+console.log(extractCode128("scan:ABC-123456 done"));`,
+            python: `def extract_code128(s):
+    # Viết code của bạn ở đây
+    # Tìm pattern [A-Z0-9-] độ dài 6-20
+    pass
+
+# Test
+print(extract_code128("scan:ABC-123456 done"))`
+        },
+        testCases: [
+            { input: ["scan:ABC-123456 done"], expected: ["ABC-123456"] },
+            { input: ["data PROD-001 and ITEM-999-XL here"], expected: ["PROD-001", "ITEM-999-XL"] },
+            { input: ["no code here"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractCode128(s) {
+    const matches = s.match(/[A-Z][A-Z0-9-]{5,19}/g);
+    return matches || [];
+}`,
+            python: `def extract_code128(s):
+    import re
+    return re.findall(r'[A-Z][A-Z0-9-]{5,19}', s)`
+        }
+    },
+    {
+        id: 54,
+        title: "Extract Serial Number",
+        difficulty: "easy",
+        category: "String/Regex",
+        description: "Trích xuất số serial từ chuỗi. Serial có format: 2-3 chữ cái + 6-10 số (VD: SN123456, ABC1234567890).",
+        hint: "Dùng regex: /[A-Z]{2,3}\\d{6,10}/g",
+        examples: [
+            { input: 's = "Device SN123456789 registered"', output: '["SN123456789"]' },
+            { input: 's = "Items: ABC123456, XYZ9876543210"', output: '["ABC123456", "XYZ9876543210"]' }
+        ],
+        starterCode: {
+            javascript: `function extractSerialNumbers(s) {
+    // Viết code của bạn ở đây
+    // Format: 2-3 chữ + 6-10 số
+
+}
+
+// Test
+console.log(extractSerialNumbers("Device SN123456789 registered"));`,
+            python: `def extract_serial_numbers(s):
+    # Viết code của bạn ở đây
+    # Format: 2-3 chữ + 6-10 số
+    pass
+
+# Test
+print(extract_serial_numbers("Device SN123456789 registered"))`
+        },
+        testCases: [
+            { input: ["Device SN123456789 registered"], expected: ["SN123456789"] },
+            { input: ["Items: ABC123456, XYZ9876543210"], expected: ["ABC123456", "XYZ9876543210"] },
+            { input: ["no serial"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractSerialNumbers(s) {
+    const matches = s.match(/[A-Z]{2,3}\\d{6,10}/g);
+    return matches || [];
+}`,
+            python: `def extract_serial_numbers(s):
+    import re
+    return re.findall(r'[A-Z]{2,3}\\d{6,10}', s)`
+        }
+    },
+    {
+        id: 55,
+        title: "Extract UPC-A Barcode",
+        difficulty: "medium",
+        category: "String/Regex",
+        description: "Trích xuất mã vạch UPC-A (đúng 12 chữ số) từ chuỗi lộn xộn.",
+        hint: "UPC-A có đúng 12 chữ số. Dùng regex với negative lookbehind/lookahead để tránh match số dài hơn.",
+        examples: [
+            { input: 's = "UPC: 012345678905 - valid"', output: '["012345678905"]' },
+            { input: 's = "codes:123456789012,098765432109"', output: '["123456789012", "098765432109"]' }
+        ],
+        starterCode: {
+            javascript: `function extractUPCA(s) {
+    // Viết code của bạn ở đây
+    // Tìm UPC-A (đúng 12 chữ số)
+
+}
+
+// Test
+console.log(extractUPCA("UPC: 012345678905 - valid"));`,
+            python: `def extract_upca(s):
+    # Viết code của bạn ở đây
+    # Tìm UPC-A (đúng 12 chữ số)
+    pass
+
+# Test
+print(extract_upca("UPC: 012345678905 - valid"))`
+        },
+        testCases: [
+            { input: ["UPC: 012345678905 - valid"], expected: ["012345678905"] },
+            { input: ["codes:123456789012,098765432109"], expected: ["123456789012", "098765432109"] },
+            { input: ["short1234"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractUPCA(s) {
+    const matches = s.match(/(?<!\\d)\\d{12}(?!\\d)/g);
+    return matches || [];
+}`,
+            python: `def extract_upca(s):
+    import re
+    return re.findall(r'(?<!\\d)\\d{12}(?!\\d)', s)`
+        }
+    },
+    {
+        id: 56,
+        title: "Extract QR Code Data Pattern",
+        difficulty: "medium",
+        category: "String/Regex",
+        description: "Trích xuất dữ liệu QR Code từ chuỗi. QR data thường nằm trong dấu ngoặc vuông [...] hoặc có prefix 'QR:' hoặc 'DATA:'.",
+        hint: "Dùng regex để tìm nội dung trong [...] hoặc sau QR:/DATA:",
+        examples: [
+            { input: 's = "Scan result: [PRODUCT-123-ABC] ok"', output: '["PRODUCT-123-ABC"]' },
+            { input: 's = "QR:HelloWorld DATA:Test123"', output: '["HelloWorld", "Test123"]' }
+        ],
+        starterCode: {
+            javascript: `function extractQRData(s) {
+    // Viết code của bạn ở đây
+    // Tìm data trong [...] hoặc sau QR:/DATA:
+
+}
+
+// Test
+console.log(extractQRData("Scan result: [PRODUCT-123-ABC] ok"));`,
+            python: `def extract_qr_data(s):
+    # Viết code của bạn ở đây
+    # Tìm data trong [...] hoặc sau QR:/DATA:
+    pass
+
+# Test
+print(extract_qr_data("Scan result: [PRODUCT-123-ABC] ok"))`
+        },
+        testCases: [
+            { input: ["Scan result: [PRODUCT-123-ABC] ok"], expected: ["PRODUCT-123-ABC"] },
+            { input: ["QR:HelloWorld DATA:Test123"], expected: ["HelloWorld", "Test123"] },
+            { input: ["no qr data"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractQRData(s) {
+    const bracket = s.match(/\\[([^\\]]+)\\]/g)?.map(m => m.slice(1, -1)) || [];
+    const prefix = s.match(/(?:QR:|DATA:)(\\S+)/g)?.map(m => m.split(':')[1]) || [];
+    return [...bracket, ...prefix];
+}`,
+            python: `def extract_qr_data(s):
+    import re
+    bracket = re.findall(r'\\[([^\\]]+)\\]', s)
+    prefix = re.findall(r'(?:QR:|DATA:)(\\S+)', s)
+    return bracket + prefix`
+        }
+    },
+    {
+        id: 57,
+        title: "Extract GS1 DataMatrix",
+        difficulty: "hard",
+        category: "String/Regex",
+        description: "Trích xuất dữ liệu GS1 DataMatrix. Format: (01)GTIN(17)EXPDATE(10)LOT. Tìm các nhóm trong ngoặc đơn.",
+        hint: "Dùng regex để tìm pattern (XX)VALUE với XX là 2 số và VALUE là giá trị theo sau.",
+        examples: [
+            { input: 's = "(01)00012345678905(17)251231(10)ABC123"', output: '[{"ai":"01","value":"00012345678905"},{"ai":"17","value":"251231"},{"ai":"10","value":"ABC123"}]' }
+        ],
+        starterCode: {
+            javascript: `function extractGS1Data(s) {
+    // Viết code của bạn ở đây
+    // Tìm pattern (XX)VALUE và trả về mảng objects
+
+}
+
+// Test
+console.log(extractGS1Data("(01)00012345678905(17)251231(10)ABC123"));`,
+            python: `def extract_gs1_data(s):
+    # Viết code của bạn ở đây
+    # Tìm pattern (XX)VALUE và trả về list dicts
+    pass
+
+# Test
+print(extract_gs1_data("(01)00012345678905(17)251231(10)ABC123"))`
+        },
+        testCases: [
+            { input: ["(01)00012345678905(17)251231(10)ABC123"], expected: [{ai:"01",value:"00012345678905"},{ai:"17",value:"251231"},{ai:"10",value:"ABC123"}] },
+            { input: ["(01)12345678901234"], expected: [{ai:"01",value:"12345678901234"}] },
+            { input: ["no gs1 data"], expected: [] }
+        ],
+        solution: {
+            javascript: `function extractGS1Data(s) {
+    const regex = /\\((\\d{2})\\)([^(]+)/g;
+    const results = [];
+    let match;
+    while ((match = regex.exec(s)) !== null) {
+        results.push({ ai: match[1], value: match[2] });
+    }
+    return results;
+}`,
+            python: `def extract_gs1_data(s):
+    import re
+    matches = re.findall(r'\\((\\d{2})\\)([^(]+)', s)
+    return [{"ai": ai, "value": value} for ai, value in matches]`
+        }
+    },
+    {
+        id: 58,
+        title: "Clean and Extract Barcode",
+        difficulty: "easy",
+        category: "String/Regex",
+        description: "Làm sạch chuỗi và trích xuất barcode. Xóa tất cả ký tự không phải số, sau đó kiểm tra độ dài 8-14.",
+        hint: "Dùng replace để xóa ký tự không phải số, sau đó kiểm tra độ dài.",
+        examples: [
+            { input: 's = "BC: 123-456-789-012"', output: '"123456789012"' },
+            { input: 's = "1.2.3.4"', output: 'null' }
+        ],
+        starterCode: {
+            javascript: `function cleanAndExtract(s) {
+    // Viết code của bạn ở đây
+    // Xóa ký tự không phải số, kiểm tra độ dài 8-14
+
+}
+
+// Test
+console.log(cleanAndExtract("BC: 123-456-789-012"));`,
+            python: `def clean_and_extract(s):
+    # Viết code của bạn ở đây
+    # Xóa ký tự không phải số, kiểm tra độ dài 8-14
+    pass
+
+# Test
+print(clean_and_extract("BC: 123-456-789-012"))`
+        },
+        testCases: [
+            { input: ["BC: 123-456-789-012"], expected: "123456789012" },
+            { input: ["1.2.3.4"], expected: null },
+            { input: ["A1B2C3D4E5F6G7H8"], expected: "12345678" }
+        ],
+        solution: {
+            javascript: `function cleanAndExtract(s) {
+    const digits = s.replace(/\\D/g, '');
+    return digits.length >= 8 && digits.length <= 14 ? digits : null;
+}`,
+            python: `def clean_and_extract(s):
+    import re
+    digits = re.sub(r'\\D', '', s)
+    return digits if 8 <= len(digits) <= 14 else None`
+        }
+    },
+    {
+        id: 59,
+        title: "Validate Barcode Checksum",
+        difficulty: "hard",
+        category: "String/Math",
+        description: "Kiểm tra checksum của mã vạch EAN-13. Chữ số cuối là check digit được tính từ 12 số đầu.",
+        hint: "Tính tổng: số ở vị trí lẻ x1, số ở vị trí chẵn x3. Check digit = (10 - (tổng % 10)) % 10.",
+        examples: [
+            { input: 's = "4006381333931"', output: "true", explanation: "Check digit 1 là hợp lệ" },
+            { input: 's = "4006381333932"', output: "false" }
+        ],
+        starterCode: {
+            javascript: `function validateEAN13Checksum(s) {
+    // Viết code của bạn ở đây
+    // Kiểm tra checksum EAN-13
+
+}
+
+// Test
+console.log(validateEAN13Checksum("4006381333931"));`,
+            python: `def validate_ean13_checksum(s):
+    # Viết code của bạn ở đây
+    # Kiểm tra checksum EAN-13
+    pass
+
+# Test
+print(validate_ean13_checksum("4006381333931"))`
+        },
+        testCases: [
+            { input: ["4006381333931"], expected: true },
+            { input: ["4006381333932"], expected: false },
+            { input: ["5901234123457"], expected: true }
+        ],
+        solution: {
+            javascript: `function validateEAN13Checksum(s) {
+    if (s.length !== 13 || !/^\\d+$/.test(s)) return false;
+    let sum = 0;
+    for (let i = 0; i < 12; i++) {
+        sum += parseInt(s[i]) * (i % 2 === 0 ? 1 : 3);
+    }
+    const checkDigit = (10 - (sum % 10)) % 10;
+    return checkDigit === parseInt(s[12]);
+}`,
+            python: `def validate_ean13_checksum(s):
+    if len(s) != 13 or not s.isdigit():
+        return False
+    total = sum(int(s[i]) * (1 if i % 2 == 0 else 3) for i in range(12))
+    check_digit = (10 - (total % 10)) % 10
+    return check_digit == int(s[12])`
+        }
+    },
+    {
+        id: 60,
+        title: "Extract Multiple Barcode Types",
+        difficulty: "hard",
+        category: "String/Regex",
+        description: "Trích xuất nhiều loại mã vạch từ chuỗi: EAN-13 (13 số), UPC-A (12 số), EAN-8 (8 số). Phân loại và trả về object.",
+        hint: "Tìm tất cả chuỗi số, sau đó phân loại theo độ dài: 8=EAN-8, 12=UPC-A, 13=EAN-13.",
+        examples: [
+            { input: 's = "Products: 4006381333931, 012345678905, 12345670"', output: '{"ean13":["4006381333931"],"upca":["012345678905"],"ean8":["12345670"]}' }
+        ],
+        starterCode: {
+            javascript: `function extractMultipleBarcodes(s) {
+    // Viết code của bạn ở đây
+    // Trả về {ean13: [], upca: [], ean8: []}
+
+}
+
+// Test
+console.log(extractMultipleBarcodes("Products: 4006381333931, 012345678905, 12345670"));`,
+            python: `def extract_multiple_barcodes(s):
+    # Viết code của bạn ở đây
+    # Trả về {"ean13": [], "upca": [], "ean8": []}
+    pass
+
+# Test
+print(extract_multiple_barcodes("Products: 4006381333931, 012345678905, 12345670"))`
+        },
+        testCases: [
+            { input: ["Products: 4006381333931, 012345678905, 12345670"], expected: {ean13:["4006381333931"],upca:["012345678905"],ean8:["12345670"]} },
+            { input: ["no barcodes here"], expected: {ean13:[],upca:[],ean8:[]} }
+        ],
+        solution: {
+            javascript: `function extractMultipleBarcodes(s) {
+    const result = { ean13: [], upca: [], ean8: [] };
+    const matches = s.match(/(?<!\\d)\\d{8}(?!\\d)|(?<!\\d)\\d{12}(?!\\d)|(?<!\\d)\\d{13}(?!\\d)/g) || [];
+    for (const m of matches) {
+        if (m.length === 13) result.ean13.push(m);
+        else if (m.length === 12) result.upca.push(m);
+        else if (m.length === 8) result.ean8.push(m);
+    }
+    return result;
+}`,
+            python: `def extract_multiple_barcodes(s):
+    import re
+    result = {"ean13": [], "upca": [], "ean8": []}
+    matches = re.findall(r'(?<!\\d)(\\d{8}|\\d{12}|\\d{13})(?!\\d)', s)
+    for m in matches:
+        if len(m) == 13:
+            result["ean13"].append(m)
+        elif len(m) == 12:
+            result["upca"].append(m)
+        elif len(m) == 8:
+            result["ean8"].append(m)
+    return result`
+        }
     }
 ];

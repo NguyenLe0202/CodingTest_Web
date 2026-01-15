@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Practice - Luyện Tập Lập Trình</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- CodeMirror for code editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <h1>Coding Practice</h1>
+            </div>
+            <div class="round-info">
+                <span id="round-display">Round: 1</span>
+                <span id="question-display">Câu: 1/5</span>
+                <span id="score-display">Điểm: 0</span>
+            </div>
+        </header>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="start-content">
+                <h2><i class="fas fa-laptop-code"></i> Chào mừng đến với Coding Practice!</h2>
+                <p>Luyện tập giải các bài tập lập trình với JavaScript và Python</p>
+
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-random"></i>
+                        <span>50+ bài tập ngẫu nhiên</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Gợi ý khi sai</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-trophy"></i>
+                        <span>Theo dõi điểm số</span>
+                    </div>
+                </div>
+
+                <div class="language-select">
+                    <h3>Chọn ngôn ngữ lập trình:</h3>
+                    <div class="language-buttons">
+                        <button class="lang-btn active" data-lang="javascript">
+                            <i class="fab fa-js-square"></i> JavaScript
+                        </button>
+                        <button class="lang-btn" data-lang="python">
+                            <i class="fab fa-python"></i> Python
+                        </button>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="btn-primary">
+                    <i class="fas fa-play"></i> Bắt đầu làm bài
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-container">
+                <!-- Problem Panel -->
+                <div class="problem-panel">
+                    <div class="problem-header">
+                        <span class="difficulty-badge" id="difficulty-badge">Easy</span>
+                        <span class="category-badge" id="category-badge">Array</span>
+                    </div>
+                    <h2 id="problem-title">Problem Title</h2>
+                    <div class="problem-description" id="problem-description">
+                        <!-- Problem description will be inserted here -->
+                    </div>
+
+                    <div class="examples" id="examples">
+                        <!-- Examples will be inserted here -->
+                    </div>
+
+                    <div class="hint-section" id="hint-section" style="display: none;">
+                        <div class="hint-header">
+                            <i class="fas fa-lightbulb"></i> Gợi ý
+                        </div>
+                        <div class="hint-content" id="hint-content">
+                            <!-- Hint will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Panel -->
+                <div class="code-panel">
+                    <div class="code-header">
+                        <div class="language-tabs">
+                            <button class="tab-btn active" data-lang="javascript">
+                                <i class="fab fa-js-square"></i> JavaScript
+                            </button>
+                            <button class="tab-btn" data-lang="python">
+                                <i class="fab fa-python"></i> Python
+                            </button>
+                        </div>
+                        <button id="reset-code-btn" class="btn-secondary">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="editor-container">
+                        <textarea id="code-editor"></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="run-btn" class="btn-run">
+                            <i class="fas fa-play"></i> Chạy thử
+                        </button>
+                        <button id="submit-btn" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Nộp bài
+                        </button>
+                    </div>
+
+                    <div class="output-section">
+                        <div class="output-header">
+                            <i class="fas fa-terminal"></i> Kết quả
+                        </div>
+                        <div class="output-content" id="output-content">
+                            <p class="output-placeholder">Nhấn "Chạy thử" để xem kết quả...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="result-content">
+                <div class="result-icon" id="result-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 id="result-title">Chính xác!</h2>
+                <p id="result-message">Bạn đã giải đúng bài toán.</p>
+
+                <div class="result-stats" id="result-stats">
+                    <!-- Stats will be inserted here -->
+                </div>
+
+                <div class="result-buttons">
+                    <button id="next-btn" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i> Câu tiếp theo
+                    </button>
+                    <button id="retry-btn" class="btn-secondary" style="display: none;">
+                        <i class="fas fa-redo"></i> Thử lại
+                    </button>
+                    <button id="show-hint-btn" class="btn-hint" style="display: none;">
+                        <i class="fas fa-lightbulb"></i> Xem gợi ý
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Round Summary Screen -->
+        <div id="summary-screen" class="screen">
+            <div class="summary-content">
+                <div class="summary-icon">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+                <h2>Hoàn thành Round <span id="completed-round">1</span>!</h2>
+
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="correct-count">0</div>
+                        <div class="stat-label">Đúng</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="wrong-count">0</div>
+                        <div class="stat-label">Sai</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-score">0</div>
+                        <div class="stat-label">Tổng điểm</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="accuracy">0%</div>
+                        <div class="stat-label">Độ chính xác</div>
+                    </div>
+                </div>
+
+                <div class="summary-message" id="summary-message">
+                    <!-- Performance message will be inserted here -->
+                </div>
+
+                <div class="summary-buttons">
+                    <button id="new-round-btn" class="btn-primary">
+                        <i class="fas fa-play"></i> Round mới
+                    </button>
+                    <button id="home-btn" class="btn-secondary">
+                        <i class="fas fa-home"></i> Về trang chủ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CodeMirror Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/matchbrackets.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="problems.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

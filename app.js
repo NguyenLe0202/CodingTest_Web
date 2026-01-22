@@ -30,12 +30,18 @@ const elements = {
     examples: document.getElementById('examples'),
     difficultyBadge: document.getElementById('difficulty-badge'),
     categoryBadge: document.getElementById('category-badge'),
-    hintSection: document.getElementById('hint-section'),
-    hintContent: document.getElementById('hint-content'),
+    hintPopup: document.getElementById('hint-popup'),
+    hintPopupBody: document.getElementById('hint-popup-body'),
+    hintCloseBtn: document.getElementById('hint-close-btn'),
+    solutionPopup: document.getElementById('solution-popup'),
+    solutionPopupBody: document.getElementById('solution-popup-body'),
+    solutionCloseBtn: document.getElementById('solution-close-btn'),
     outputContent: document.getElementById('output-content'),
     runBtn: document.getElementById('run-btn'),
     submitBtn: document.getElementById('submit-btn'),
     resetCodeBtn: document.getElementById('reset-code-btn'),
+    showSolutionBtn: document.getElementById('show-solution-btn'),
+    skipQuestionBtn: document.getElementById('skip-question-btn'),
     resultIcon: document.getElementById('result-icon'),
     resultTitle: document.getElementById('result-title'),
     resultMessage: document.getElementById('result-message'),
@@ -43,6 +49,7 @@ const elements = {
     nextBtn: document.getElementById('next-btn'),
     retryBtn: document.getElementById('retry-btn'),
     showHintBtn: document.getElementById('show-hint-btn'),
+    skipBtn: document.getElementById('skip-btn'),
     completedRound: document.getElementById('completed-round'),
     correctCount: document.getElementById('correct-count'),
     wrongCount: document.getElementById('wrong-count'),
@@ -81,6 +88,11 @@ function setupEventListeners() {
             state.currentLanguage = btn.dataset.lang;
             updateEditorLanguage();
             loadProblemCode();
+
+            // Ensure editor is refreshed after language change
+            setTimeout(() => {
+                editor.refresh();
+            }, 100);
         });
     });
 
@@ -89,11 +101,30 @@ function setupEventListeners() {
     elements.runBtn.addEventListener('click', runCode);
     elements.submitBtn.addEventListener('click', submitAnswer);
     elements.resetCodeBtn.addEventListener('click', resetCode);
+    elements.showSolutionBtn.addEventListener('click', showSolution);
+    elements.skipQuestionBtn.addEventListener('click', skipQuestion);
     elements.nextBtn.addEventListener('click', nextQuestion);
     elements.retryBtn.addEventListener('click', retryQuestion);
     elements.showHintBtn.addEventListener('click', showHint);
+    elements.skipBtn.addEventListener('click', skipQuestion);
     elements.newRoundBtn.addEventListener('click', startNewRound);
     elements.homeBtn.addEventListener('click', goHome);
+
+    // Hint popup
+    elements.hintCloseBtn.addEventListener('click', closeHintPopup);
+    elements.hintPopup.addEventListener('click', (e) => {
+        if (e.target === elements.hintPopup) {
+            closeHintPopup();
+        }
+    });
+
+    // Solution popup
+    elements.solutionCloseBtn.addEventListener('click', closeSolutionPopup);
+    elements.solutionPopup.addEventListener('click', (e) => {
+        if (e.target === elements.solutionPopup) {
+            closeSolutionPopup();
+        }
+    });
 }
 
 // Initialize CodeMirror Editor
@@ -147,6 +178,11 @@ function startNewRound() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === state.currentLanguage);
     });
+
+    // Ensure editor is properly rendered when showing quiz screen
+    setTimeout(() => {
+        editor.refresh();
+    }, 150);
 }
 
 // Select Random Problems
@@ -196,14 +232,14 @@ function loadQuestion() {
     });
     elements.examples.innerHTML = examplesHTML;
 
-    // Hide hint
-    elements.hintSection.style.display = 'none';
-
     // Load code
     loadProblemCode();
 
     // Clear output
     elements.outputContent.innerHTML = '<p class="output-placeholder">Nhấn "Chạy thử" để xem kết quả...</p>';
+
+    // Clear result stats from previous question
+    elements.resultStats.innerHTML = '';
 
     updateHeader();
 }
@@ -213,6 +249,11 @@ function loadProblemCode() {
     const code = state.currentProblem.starterCode[state.currentLanguage];
     editor.setValue(code);
     updateEditorLanguage();
+
+    // Refresh editor to ensure proper rendering
+    setTimeout(() => {
+        editor.refresh();
+    }, 100);
 }
 
 // Reset Code
@@ -412,6 +453,7 @@ function showResult(isCorrect) {
         elements.nextBtn.style.display = 'inline-flex';
         elements.retryBtn.style.display = 'none';
         elements.showHintBtn.style.display = 'none';
+        elements.skipBtn.style.display = 'none';
     } else {
         elements.resultIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
         elements.resultIcon.className = 'result-icon error';
@@ -422,20 +464,21 @@ function showResult(isCorrect) {
             elements.nextBtn.style.display = 'none';
             elements.retryBtn.style.display = 'inline-flex';
             elements.showHintBtn.style.display = 'inline-flex';
+            elements.skipBtn.style.display = 'inline-flex';
         } else {
-            elements.resultMessage.textContent = 'Đã hết số lần thử. Xem đáp án và tiếp tục nhé!';
+            elements.resultMessage.textContent = 'Đã hết số lần thử. Bạn có thể xem đáp án hoặc tiếp tục câu khác!';
             state.wrongInRound++;
 
-            // Show solution
-            const solution = state.currentProblem.solution[state.currentLanguage];
             elements.resultStats.innerHTML = `
-                <p><strong>Đáp án tham khảo:</strong></p>
-                <pre style="text-align: left; background: var(--code-bg); padding: 10px; border-radius: 6px; overflow-x: auto;">${escapeHtml(solution)}</pre>
+                <p style="color: var(--text-secondary);">
+                    <i class="fas fa-info-circle"></i> Bạn có thể quay lại màn hình chính để xem và chạy đáp án tham khảo.
+                </p>
             `;
 
             elements.nextBtn.style.display = 'inline-flex';
             elements.retryBtn.style.display = 'none';
             elements.showHintBtn.style.display = 'none';
+            elements.skipBtn.style.display = 'none';
         }
 
         elements.resultStats.innerHTML = elements.resultStats.innerHTML || `
@@ -450,16 +493,190 @@ function showResult(isCorrect) {
 // Retry Question
 function retryQuestion() {
     showScreen('quiz-screen');
-    showHint();
+
+    // Ensure editor is refreshed when returning to quiz screen
+    setTimeout(() => {
+        editor.refresh();
+    }, 100);
+}
+
+// Format Hint with Steps
+function formatHint(hint) {
+    // Check if hint has numbered steps (1., 2., etc.)
+    const steps = hint.split(/\d+\.\s+/).filter(s => s.trim());
+
+    if (steps.length > 1) {
+        let html = '<div class="hint-steps">';
+        steps.forEach((step, index) => {
+            if (step.trim()) {
+                html += `
+                    <div class="hint-step">
+                        <span class="hint-step-number">${index + 1}</span>
+                        <div class="hint-step-content">${escapeHtml(step.trim())}</div>
+                    </div>
+                `;
+            }
+        });
+        html += '</div>';
+        return html;
+    } else {
+        // If no numbered steps, check for sentence breaks
+        const sentences = hint.split(/\.\s+/);
+        if (sentences.length > 2) {
+            let html = '<div class="hint-steps">';
+            sentences.forEach((sentence, index) => {
+                if (sentence.trim() && sentence.length > 5) {
+                    html += `
+                        <div class="hint-step">
+                            <span class="hint-step-number">${index + 1}</span>
+                            <div class="hint-step-content">${escapeHtml(sentence.trim())}.</div>
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+            return html;
+        }
+    }
+
+    // Default: just show as is with nice formatting
+    return `<p style="line-height: 1.8;">${escapeHtml(hint)}</p>`;
 }
 
 // Show Hint
 function showHint() {
-    elements.hintSection.style.display = 'block';
-    elements.hintContent.textContent = state.currentProblem.hint;
+    const formattedHint = formatHint(state.currentProblem.hint);
+    elements.hintPopupBody.innerHTML = `
+        <div style="margin-bottom: 15px;">
+            <h4 style="color: var(--text-primary); margin-bottom: 10px;">💡 Cách tiếp cận:</h4>
+        </div>
+        ${formattedHint}
+    `;
+    elements.hintPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
-    if (document.getElementById('quiz-screen').classList.contains('active')) {
-        elements.hintSection.scrollIntoView({ behavior: 'smooth' });
+// Close Hint Popup
+function closeHintPopup() {
+    elements.hintPopup.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Format Solution Code with Comments
+function formatSolutionCode(code) {
+    const lines = code.split('\n');
+    let formatted = '';
+
+    lines.forEach(line => {
+        // Highlight comments
+        if (line.trim().startsWith('//') || line.trim().startsWith('#')) {
+            formatted += `<span class="solution-code-comment">${escapeHtml(line)}</span>\n`;
+        } else {
+            formatted += escapeHtml(line) + '\n';
+        }
+    });
+
+    return formatted;
+}
+
+// Add Detailed Comments to Solution
+function addDetailedComments(solution, language) {
+    // This is a simplified version - you can enhance based on problem patterns
+    const lines = solution.split('\n');
+    let commented = [];
+
+    // Add intro comment
+    if (language === 'javascript') {
+        commented.push('// 📝 GIẢI THÍCH CHI TIẾT:');
+        commented.push('');
+    } else {
+        commented.push('# 📝 GIẢI THÍCH CHI TIẾT:');
+        commented.push('');
+    }
+
+    // Add original code with line-by-line comments
+    lines.forEach(line => {
+        commented.push(line);
+    });
+
+    return commented.join('\n');
+}
+
+// Show Solution Popup
+function showSolution() {
+    const solution = state.currentProblem.solution[state.currentLanguage];
+    const formattedCode = formatSolutionCode(solution);
+
+    elements.solutionPopupBody.innerHTML = `
+        <div class="solution-explanation">
+            <h4>📖 Giải thích thuật toán:</h4>
+            <p style="line-height: 1.7; color: var(--text-secondary);">
+                Dưới đây là code đáp án với giải thích chi tiết.
+                Hãy đọc kỹ từng dòng để hiểu cách giải bài toán này.
+            </p>
+        </div>
+
+        <div class="solution-code">
+            <pre>${formattedCode}</pre>
+        </div>
+
+        <div class="solution-actions">
+            <button class="btn-copy-solution" onclick="copySolutionToEditor()">
+                <i class="fas fa-copy"></i> Copy vào Editor
+            </button>
+        </div>
+    `;
+
+    elements.solutionPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close Solution Popup
+function closeSolutionPopup() {
+    elements.solutionPopup.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Copy Solution to Editor
+function copySolutionToEditor() {
+    const solution = state.currentProblem.solution[state.currentLanguage];
+    editor.setValue(solution);
+
+    // Close popup
+    closeSolutionPopup();
+
+    // Show message
+    elements.outputContent.innerHTML = `
+        <p class="output-info">
+            <i class="fas fa-check-circle"></i> Đã copy đáp án vào editor.
+            Bạn có thể chạy thử hoặc chỉnh sửa code này.
+        </p>
+    `;
+
+    // Refresh editor
+    setTimeout(() => {
+        editor.refresh();
+    }, 100);
+}
+
+// Skip Question
+function skipQuestion() {
+    // Mark as wrong since skipped
+    state.wrongInRound++;
+
+    // Move to next question
+    state.currentQuestion++;
+
+    if (state.currentQuestion >= state.questionsPerRound) {
+        showRoundSummary();
+    } else {
+        loadQuestion();
+        showScreen('quiz-screen');
+
+        // Ensure editor is refreshed for new question
+        setTimeout(() => {
+            editor.refresh();
+        }, 100);
     }
 }
 
@@ -472,6 +689,11 @@ function nextQuestion() {
     } else {
         loadQuestion();
         showScreen('quiz-screen');
+
+        // Ensure editor is refreshed for new question
+        setTimeout(() => {
+            editor.refresh();
+        }, 100);
     }
 }
 

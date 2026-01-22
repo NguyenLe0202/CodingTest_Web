@@ -82,15 +82,6 @@
                     <div class="examples" id="examples">
                         <!-- Examples will be inserted here -->
                     </div>
-
-                    <div class="hint-section" id="hint-section" style="display: none;">
-                        <div class="hint-header">
-                            <i class="fas fa-lightbulb"></i> Gợi ý
-                        </div>
-                        <div class="hint-content" id="hint-content">
-                            <!-- Hint will be inserted here -->
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Code Panel -->
@@ -119,6 +110,12 @@
                         </button>
                         <button id="submit-btn" class="btn-submit">
                             <i class="fas fa-paper-plane"></i> Nộp bài
+                        </button>
+                        <button id="show-solution-btn" class="btn-solution">
+                            <i class="fas fa-code"></i> Xem giải thích
+                        </button>
+                        <button id="skip-question-btn" class="btn-skip">
+                            <i class="fas fa-forward"></i> Bỏ qua
                         </button>
                     </div>
 
@@ -156,6 +153,9 @@
                     </button>
                     <button id="show-hint-btn" class="btn-hint" style="display: none;">
                         <i class="fas fa-lightbulb"></i> Xem gợi ý
+                    </button>
+                    <button id="skip-btn" class="btn-skip" style="display: none;">
+                        <i class="fas fa-forward"></i> Bỏ qua câu này
                     </button>
                 </div>
             </div>
@@ -200,6 +200,40 @@
                         <i class="fas fa-home"></i> Về trang chủ
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hint Popup -->
+    <div id="hint-popup" class="hint-popup">
+        <div class="hint-popup-content">
+            <div class="hint-popup-header">
+                <div class="hint-popup-title">
+                    <i class="fas fa-lightbulb"></i> Gợi ý
+                </div>
+                <button id="hint-close-btn" class="hint-close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="hint-popup-body" id="hint-popup-body">
+                <!-- Hint content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Solution Popup -->
+    <div id="solution-popup" class="solution-popup">
+        <div class="solution-popup-content">
+            <div class="solution-popup-header">
+                <div class="solution-popup-title">
+                    <i class="fas fa-code"></i> Đáp án chi tiết
+                </div>
+                <button id="solution-close-btn" class="solution-close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="solution-popup-body" id="solution-popup-body">
+                <!-- Solution content will be inserted here -->
             </div>
         </div>
     </div>
